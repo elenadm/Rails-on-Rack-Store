@@ -4,6 +4,7 @@ class Store
   def call(env)
     q = env['QUERY_STRING']
     name = q.split('=').last
+    #raise 34 #error
     if name
       pr = Product.find(name)
       if pr
