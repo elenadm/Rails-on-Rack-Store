@@ -1,0 +1,10 @@
+body {
+    padding-top: 20px;
+    background: #CCCCFF;
+}
+
+p {
+    letter-spacing: -1px;
+    text-align: center;
+    color: #330099;
+}

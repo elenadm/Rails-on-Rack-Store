@@ -2,8 +2,8 @@ require './product'
 
 class Store
   def call(env)
-    q = env['QUERY_STRING']
-    name = q.split('=').last
+    request = Rack::Request.new(env)
+    name = request.path.split('/')[-1]
     #raise 34 #error
     if name
       pr = Product.find(name)
@@ -13,7 +13,7 @@ class Store
         [404, {"Content-Type" => "text/html"}, ["Product not found"]]
       end
     else
-      [200, {"Content-Type" => "text/html"}, [Product.to_html, 'What name you are looking for?<form><input name="name"><input type="submit"></form>']]
+      [200, {"Content-Type" => "text/html"}, [Product.to_html]]
     end
   end
 end

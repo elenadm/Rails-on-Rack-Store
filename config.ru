@@ -1,6 +1,11 @@
+#\ -p 8080
 require './store'
 require './check_exception'
-use Rack::Reloader
+
+use Rack::Static,
+    :urls => ["/images", "/js", "/css"],
+    :root => "public"
+use Rack::Reloader, 0
 use Check_exception
 
 Product.new("blouse", 30).save

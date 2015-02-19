@@ -1,4 +1,7 @@
+require './layout.rb'
+
 class Product
+  include Layout
   @@products = []
 
   attr_reader :name
@@ -31,7 +34,9 @@ class Product
   end
 
   def to_html
-    "<p>#{self.name}:   #{self.price}</p>"
+    layout do
+      "<p><a href='http://localhost:8080/#{self.name}'>#{self.name}:   #{self.price}</p>"
+    end
   end
 
   def self.to_html
