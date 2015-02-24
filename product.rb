@@ -6,10 +6,12 @@ class Product
 
   attr_reader :name
   attr_reader :price
+  attr_reader :img
 
-  def initialize(name, price)
+  def initialize(name, price, img)
     @name = name
     @price = price
+    @img = img
   end
 
   def save
@@ -35,7 +37,7 @@ class Product
 
   def to_html
     layout do
-      "<p><a href='http://localhost:8080/#{self.name}'>#{self.name}:   #{self.price}</p>"
+      "<p><a href='http://localhost:8080/#{self.name}'>#{self.name}:   #{self.price}  <img src='#{self.img}' width='100' height='100' ></p>"
     end
   end
 
@@ -44,9 +46,9 @@ class Product
   end
 end
 
-Product.new("blouse", 30).save
-Product.new("dress", 50).save
-Product.new("hat", 40).save
-Product.new("jacket", 55).save
-Product.new("jumper", 25).save
-Product.new("shirt", 20).save
+Product.new("blouse", 30, "blouse.jpg").save
+Product.new("dress", 50, "dress.jpg").save
+Product.new("hat", 40, "hat.jpg").save
+Product.new("jacket", 55, "jacket.jpg").save
+Product.new("jumper", 25, "jumper.jpg").save
+Product.new("shirt", 20, "shirt.jpg").save

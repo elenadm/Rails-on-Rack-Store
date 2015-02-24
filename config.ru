@@ -2,10 +2,9 @@
 require './store'
 require './check_exception'
 require './session'
+require './static'
 
-use Rack::Static,
-    :urls => ["/images", "/js", "/css"],
-    :root => "public"
+use Static
 use Rack::Reloader, 0
 use Session
 use Check_exception

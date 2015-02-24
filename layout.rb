@@ -3,7 +3,8 @@ module Layout
     content = "<!DOCTYPE HTML> \n"
     content << "<html> \n"
     content << "<head> \n"
-    content << "<link rel='stylesheet' type = 'text/css' href='css/style.css'> \n"
+    content << "<title>Store</title> \n"
+    content << "<link rel='stylesheet' type = 'text/css' href='style.css'> \n"
     content << "</head> \n"
     content << "<body> \n"
     content << yield
