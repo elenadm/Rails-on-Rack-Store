@@ -13,7 +13,7 @@ class Store
         [404, {"Content-Type" => "text/html"}, ["Product not found"]]
       end
     else
-      [200, {"Content-Type" => "text/html"}, [env["HTTP_COOKIE"], Product.to_html]]
+      [200, {"Content-Type" => "text/html"}, [env['session'].to_s, Product.to_html]]
     end
   end
 end
