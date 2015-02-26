@@ -1,12 +1,12 @@
 #\ -p 8080
 require './store'
-require './check_exception'
-require './session'
-require './static'
+require './middleware/check_exception'
+require './middleware/session'
+require './middleware/static'
 
-use Static
-use Rack::Reloader, 0
-use Session
 use Check_exception
+use Static
+use Session
+use Rack::Reloader, 0
 
 run Store.new

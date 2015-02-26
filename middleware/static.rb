@@ -8,7 +8,7 @@ class Static
       data = File.open("public/"+ file_name).read
       [200, {'Content-Type' => type}, [data]]
     rescue
-      [401, {'Content-Type' => 'text/html'}, ["No such file #{file_name}"]]
+      [404, {'Content-Type' => 'text/html'}, ["File #{file_name} not found"]]
     end
   end
 
