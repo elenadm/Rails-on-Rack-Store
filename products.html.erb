@@ -1,0 +1,6 @@
+<% @products.each do |pr| %>
+    <p><a href='http://localhost:8080/<%= pr.name %>'><%= pr.name %>:</a>
+      <%= pr.price %>
+      <img src='/img/<%= pr.img %>' width='100' height='100'>
+    </p>
+<% end %>
