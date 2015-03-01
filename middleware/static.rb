@@ -1,26 +1,31 @@
 class Static
-  def initialize (app)
+  def initialize (app, name_path_public)
     @app = app
+    @name_path_public = name_path_public
   end
 
-  def read_file(file_name, type)
-    begin
-      data = File.open("public/"+ file_name).read
-      [200, {'Content-Type' => type}, [data]]
-    rescue
-      [404, {'Content-Type' => 'text/html'}, ["File #{file_name} not found"]]
+  def detect_type(file_name)
+    case file_name
+      when /\/(\w+.css)$/
+        return "text/css"
+      when /\/(\w+.jpg)$/
+        return "image/jpeg"
+      else
+        return "application/octet-stream"
     end
   end
 
+  def read_file(file_name)
+    data = File.open(file_name).read
+    [200, {'Content-Type' => detect_type(file_name)}, [data]]
+  end
+
   def call(env)
-    request = Rack::Request.new(env)
-    case request.path
-      when /\/(\w+.css)$/
-        read_file("/css/#{$1}", "text/css")
-      when /\/(\w+.jpg)$/
-        read_file("img/#{$1}", "image/jpeg")
-      else
-        @app.call(env)
+    name = @name_path_public + env['PATH_INFO']
+    if File.file?(name)
+      read_file(name)
+    else
+      @app.call(env)
     end
   end
 end
