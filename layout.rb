@@ -1,3 +1,5 @@
+require "erb"
+
 module Layout
   def layout
     content = "<!DOCTYPE HTML> \n"

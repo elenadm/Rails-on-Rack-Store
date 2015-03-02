@@ -11,8 +11,8 @@ class Store
         if request.post?
           [200, {"Content-Type" => "text/html"}, [env['session'].to_s]]
         end
-      when /^\/(\w+)$/ #name /^\/(\w+)$/
-        p pr = Product.find($1)
+      when /^\/(\w+)$/
+        pr = Product.find($1)
         if pr
           [200, {"Content-Type" => "text/html"}, [pr.to_html]]
         else
