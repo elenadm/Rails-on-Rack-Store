@@ -44,8 +44,7 @@ class Product
 
   def self.to_html
     context = ERBContext.new(:products => Product.all)
-    #p __dir__
-    render("./layout.html.erb", "./products.html.erb", context)
+    render(".layout.html.erb", "./products.html.erb", context)
   end
 end
 
