@@ -2,7 +2,7 @@ require './layout.rb'
 require './erb_context.rb'
 
 class Cart
-  extend Layout
+  include Layout
   @@cart = [] #{}
 
   def save
@@ -13,10 +13,6 @@ class Cart
   def self.products
     @@cart
   end
-
-  # def inspect
-  #   @cart.inspect
-  # end
 
   def add(product)
     @@cart << product
@@ -39,8 +35,7 @@ class Cart
     @@cart = [] #{}
   end
 
-  def self.to_html
-    Cart.products
+  def to_html
     context = ERBContext.new(:cart => Cart.products)
     render("./layout.html.erb", "./cart.html.erb", context)
   end

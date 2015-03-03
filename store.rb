@@ -14,7 +14,7 @@ class Store
           cart = env['session']['cart']
           pr_name = request.params["product_name"]
           cart.add(pr_name)
-          [200, {"Content-Type" => "text/html"}, [Cart.to_html]]
+          [200, {"Content-Type" => "text/html"}, [cart.to_html]]
         else
           [200, {"Content-Type" => "text/html"}, [env['session'].to_s, Product.to_html]]
         end
