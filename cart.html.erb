@@ -1,0 +1,11 @@
+<p> Your Cart</p>
+
+<% @cart.each do |pr| %>
+    <p>
+      <%= pr.name %>
+    </p>
+<% end %>
+
+<p>
+  <a href='http://localhost:8080/'> Back to main:</a>
+</p>

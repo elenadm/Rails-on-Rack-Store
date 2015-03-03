@@ -4,7 +4,7 @@
       <img src='/img/<%= pr.img %>' width='100' height='100'>
     </p>
     <form method="POST" action="/cart">
-      <!--<input name="name" value="pen" type="hidden">-->
+      <input name="product_name" value="<%= pr.name %>" type="hidden">
       <input type="submit" value="Add to cart">
     </form>
 <% end %>

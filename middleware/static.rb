@@ -10,6 +10,8 @@ class Static
         return "text/css"
       when /\/(\w+.jpg)$/
         return "image/jpeg"
+      when /\/(\w+.ico)$/
+        return "image/x-icon"
       else
         return "application/octet-stream"
     end

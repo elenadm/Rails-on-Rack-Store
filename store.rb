@@ -1,4 +1,5 @@
 require './product'
+require './cart'
 
 class Store
   def call(env)
@@ -9,7 +10,13 @@ class Store
         [200, {"Content-Type" => "text/html"}, [env['session'].to_s, Product.to_html]]
       when "/cart"
         if request.post?
-          [200, {"Content-Type" => "text/html"}, [env['session'].to_s]]
+          env['session']['cart'] ||= Cart.new
+          cart = env['session']['cart']
+          pr_name = request.params["product_name"]
+          cart.add(pr_name)
+          [200, {"Content-Type" => "text/html"}, [Cart.to_html]]
+        else
+          [200, {"Content-Type" => "text/html"}, [env['session'].to_s, Product.to_html]]
         end
       when /^\/(\w+)$/
         pr = Product.find($1)
