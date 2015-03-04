@@ -1,9 +1,8 @@
-require './layout.rb'
+require './template.rb'
 require './erb_context.rb'
 
+
 class Product
-  include Layout
-  extend Layout
   @@products = []
 
   attr_reader :name
@@ -39,12 +38,12 @@ class Product
 
   def to_html
     context = ERBContext.new(:product => self)
-    render("./layout.html.erb", "./product.html.erb", context)
+    Template.new(context).render("./product.html.erb","./layout.html.erb")
   end
 
   def self.to_html
     context = ERBContext.new(:products => Product.all)
-    render("./layout.html.erb", "./products.html.erb", context)
+    Template.new(context).render("./products.html.erb","./layout.html.erb")
   end
 end
 

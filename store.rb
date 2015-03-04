@@ -1,5 +1,7 @@
 require './product'
 require './cart'
+require './product_controller'
+require './cart_controller'
 
 class Store
   def call(env)
@@ -7,24 +9,18 @@ class Store
     #raise 34 #error
     case request.path
       when "/"
-        [200, {"Content-Type" => "text/html"}, [env['session'].to_s, Product.to_html]]
+        ProductController.new(env).all
       when "/cart"
         if request.post?
-          env['session']['cart'] ||= Cart.new
-          cart = env['session']['cart']
-          pr_name = request.params["product_name"]
-          cart.add(pr_name)
-          [200, {"Content-Type" => "text/html"}, [cart.to_html]]
+          env['product_name'] = request.params["product_name"]
+          CartController.new(env).cart_post
         else
-          [200, {"Content-Type" => "text/html"}, [env['session'].to_s, Product.to_html]]
+          CartController.new(env).cart_get
         end
       when /^\/(\w+)$/
-        pr = Product.find($1)
-        if pr
-          [200, {"Content-Type" => "text/html"}, [pr.to_html]]
-        else
-          [404, {"Content-Type" => "text/html"}, ["Product not found"]]
-        end
+        env['name'] = $1
+        #env['QUERY_INFO'] = "name = #{$1}"
+        ProductController.new(env).one_product
     end
   end
 end

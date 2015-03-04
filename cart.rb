@@ -1,8 +1,6 @@
-require './layout.rb'
 require './erb_context.rb'
 
 class Cart
-  include Layout
   @@cart = [] #{}
 
   def save
@@ -37,6 +35,6 @@ class Cart
 
   def to_html
     context = ERBContext.new(:cart => Cart.products)
-    render("./layout.html.erb", "./cart.html.erb", context)
+    Template.new(context).render("./cart.html.erb","./layout.html.erb")
   end
 end
