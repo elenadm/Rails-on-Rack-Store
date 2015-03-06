@@ -1,11 +1,30 @@
 <p> Your Cart</p>
 
-<% @cart.each do |pr| %>
+<% @cart.products.each do |key, value| %>
     <p>
-      <%= pr %>
+      <%= key.name %>
+      <%= value * key.price %>
+    <form method="POST" action="/cart">
+      <input name="delete_product" value="<%= key.name %>" type="hidden">
+      <input type="submit" value="Delete product">
+    </form>
     </p>
+    <p>Total price:  <%= @cart.sumtotal_price %></p>
 <% end %>
 
 <p>
   <a href='http://localhost:8080/'> Back to main:</a>
 </p>
+
+<form method="POST" action="/cart">
+  <input name="delete_all_products" type="hidden">
+  <input type="submit" value="Delete all products">
+</form>
+
+<form method="POST" action="/order">
+  <input name="order" value="???" type="hidden">
+  Your name: <input type="text" name="name"><br>
+  Address: <input type="text" name="address"><br>
+  Phone number: <input type="text" name="phone"><br>
+  <input type="submit" value="Complete order">
+</form>

@@ -1,0 +1,16 @@
+<p> Orders</p>
+
+<% @orders.each do |cart| %>
+    <p>
+      <%= cart %>
+    </p>
+<% end %>
+
+<p>
+  <a href='http://localhost:8080/'> Back to main:</a>
+</p>
+
+<form method="POST" action="/order">
+  <input name="delete_all_orders" type="hidden">
+  <input type="submit" value="Delete all orders">
+</form>

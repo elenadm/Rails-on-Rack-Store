@@ -7,8 +7,8 @@ describe Product do
     described_class.purge
   end
 
-  let(:product1) { described_class.new("Name1", 12) } # альтернатива subject
-  let(:product2) { described_class.new("Name2", 20) }
+  let(:product1) { described_class.new("Name1", 12, "/Name1.jpg") } # альтернатива subject
+  let(:product2) { described_class.new("Name2", 20, "/Name2.jpg") }
 
   it "counts product" do
     #expect(described_class.count).to eq(0) #OR  expect(Product.count).to eq(0)
