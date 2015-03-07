@@ -28,7 +28,7 @@ class Order
 
   def to_html
     context = ERBContext.new(:orders => Order.all)
-    Template.new(context).render("./order.html.erb", "./layout.html.erb")
+    Template.new(context).render("./order.html.erb", "./application.html.erb")
   end
 end
 

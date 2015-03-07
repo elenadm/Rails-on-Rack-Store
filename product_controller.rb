@@ -1,18 +1,18 @@
-class ProductController
-  def initialize(env)
-    @env = env
-  end
+require './controller'
 
+class ProductController < Controller
   def all
-    [200, {"Content-Type" => "text/html"}, [@env['session'].to_s, Product.to_html]]
+    @products = Product.all
+    render './products.html.erb'
   end
 
   def one_product
-    pr = Product.find(@env['name'])
-    if pr
-      [200, {"Content-Type" => "text/html"}, [pr.to_html]]
+    @product = Product.find(params['name'])
+    if @product
+      render './product.html.erb'
     else
-      [404, {"Content-Type" => "text/html"}, ["Product not found"]]
+      @body = 'Product not found'
+      @code = 404
     end
   end
 end

@@ -37,6 +37,6 @@ class Cart
 
   def to_html
     context = ERBContext.new(:cart => self)
-    Template.new(context).render("./cart.html.erb", "./layout.html.erb")
+    Template.new(context).render("./cart.html.erb", "./application.html.erb")
   end
 end

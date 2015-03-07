@@ -4,14 +4,15 @@ require './order'
 require './product_controller'
 require './cart_controller'
 require './order_controller'
+require './controller'
 
 class Store
   def call(env)
     request = Rack::Request.new(env)
-    #raise 34 #error
     case request.path
       when "/"
-        ProductController.new(env).all
+        env['action'] = 'all'
+        ProductController.new.call(env)\
       when "/cart"
         if request.post?
           env['product_name'] = request.params["product_name"]
@@ -30,9 +31,9 @@ class Store
           OrderController.new(env).order_get
         end
       when /^\/(\w+)$/
-        env['name'] = $1
-        #env['QUERY_INFO'] = "name = #{$1}"
-        ProductController.new(env).one_product
+        env['action'] = 'one_product'
+        env['url_params'] = {'name' => $1}
+        ProductController.new.call(env)
     end
   end
 end

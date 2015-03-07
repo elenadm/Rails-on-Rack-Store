@@ -1,7 +1,3 @@
-require './template.rb'
-require './erb_context.rb'
-
-
 class Product
   @@products = []
 
@@ -34,16 +30,6 @@ class Product
 
   def self.find (name)
     @@products.detect { |e| e.name == name }
-  end
-
-  def to_html
-    context = ERBContext.new(:product => self)
-    Template.new(context).render("./product.html.erb","./layout.html.erb")
-  end
-
-  def self.to_html
-    context = ERBContext.new(:products => Product.all)
-    Template.new(context).render("./products.html.erb","./layout.html.erb")
   end
 end
 
