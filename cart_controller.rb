@@ -3,20 +3,23 @@ class CartController
     @env = env
   end
 
-  def cart_post
-    @env['session']['cart'] ||= Cart.new
+  def cart_post_add
     cart = @env['session']['cart']
-    if @env['product_name']
-      pr_name = Product.find(@env['product_name'])
-      cart.add(pr_name)
-      [200, {"Content-Type" => "text/html"}, [cart.to_html]]
-    elsif @env['delete_product']
-      cart.delete(Product.find(@env['delete_product']))
-      [200, {"Content-Type" => "text/html"}, [cart.to_html]]
-    elsif @env['delete_all_products']
-      cart.delete_all
-      [200, {"Content-Type" => "text/html"}, [@env['session'].to_s, Product.to_html]]
-    end
+    pr_name = Product.find(@env['product_name'])
+    cart.add(pr_name)
+    [302, {"Content-Type" => "text/html"}, [cart.to_html]]
+  end
+
+  def cart_post_delete_product
+    cart = @env['session']['cart']
+    cart.delete(Product.find(@env['delete_product']))
+    [302, {"Content-Type" => "text/html"}, [cart.to_html]]
+  end
+
+  def cart_post_delete_all_products
+    cart = @env['session']['cart']
+    cart.delete_all
+    [200, {"Content-Type" => "text/html"}, [@env['session'].to_s, Product.to_html]]
   end
 
   def cart_get

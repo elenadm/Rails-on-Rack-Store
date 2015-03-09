@@ -12,13 +12,21 @@ class Store
     case request.path
       when "/"
         env['action'] = 'all'
-        ProductController.new.call(env)\
+        ProductController.new.call(env)
       when "/cart"
         if request.post?
-          env['product_name'] = request.params["product_name"]
-          env['delete_product'] = request.params["delete_product"]
-          env['delete_all_products'] = request.params["delete_all_products"]
-          CartController.new(env).cart_post
+          env['session']['cart'] ||= Cart.new
+          case
+            when request.params["product_name"]
+              env['product_name'] = request.params["product_name"]
+              CartController.new(env).cart_post_add
+            when request.params["delete_product"]
+              env['delete_product'] = request.params["delete_product"]
+              CartController.new(env).cart_post_delete_product
+            when request.params["delete_all_products"]
+              env['delete_all_products'] = request.params["delete_all_products"]
+              CartController.new(env).cart_post_delete_all_products
+          end
         else
           CartController.new(env).cart_get
         end
