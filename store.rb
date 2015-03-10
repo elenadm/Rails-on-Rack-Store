@@ -25,13 +25,10 @@ class Store
             env['url_params'] = {'delete_all_products' => request.params['delete_all_products']}
             env['action'] = 'cart_post_delete_all_products'
           end
-          CartController.new.call(env)
         else
-          env['action'] = 'all'
-          ProductController.new.call(env)
-          # env['action'] = 'cart_get'
-          # CartController.new.call(env)
+          env['action'] = 'cart_get'
         end
+        CartController.new.call(env)
       when '/order'
         if request.post?
           env['order'] = Order.new(request.params['name'], request.params['address'], request.params['phone'])
