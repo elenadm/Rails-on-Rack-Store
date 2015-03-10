@@ -1,8 +1,14 @@
 <p> Orders</p>
 
-<% @orders.each do |cart| %>
+<% @orders.each do |order| %>
     <p>
-      <%= cart %>
+      <%= order.name %>
+      <%= order.address %>
+      <%= order.phone %>
+      <% order.cart.products.each do |product, count| %>
+          <%= product.name %>
+      <% end %>
+      <%= order.cart.total_price %>
     </p>
 <% end %>
 

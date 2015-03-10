@@ -1,20 +1,22 @@
 require './erb_context.rb'
 
 class Order
-  @@orders = {}
+  @@orders = []
 
   attr_reader :name
   attr_reader :address
   attr_reader :phone
+  attr_reader :cart
 
-  def initialize(name, address, phone)
+  def initialize(name, address, phone, cart)
     @name = name
     @address = address
     @phone = phone
+    @cart = cart
   end
 
   def delete_all
-    @@orders = {}
+    @@orders = []
   end
 
   def save
@@ -22,13 +24,13 @@ class Order
     self
   end
 
-  def self.all
+  def all
     @@orders
   end
 
   def to_html
-    context = ERBContext.new(:orders => Order.all)
-    Template.new(context).render("./order.html.erb", "./application.html.erb")
+    context = ERBContext.new(:orders => @@orders)
+    Template.new(context).render('./order.html.erb', './application.html.erb')
   end
 end
 

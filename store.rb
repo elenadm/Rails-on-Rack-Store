@@ -31,8 +31,10 @@ class Store
         CartController.new.call(env)
       when '/order'
         if request.post?
-          env['order'] = Order.new(request.params['name'], request.params['address'], request.params['phone'])
-          #p @env['session']['cart'] = nil
+          order = Order.new(request.params['name'], request.params['address'], request.params['phone'], env['session']['cart'])
+          order.save
+          env['order']= order
+          env['session']['cart'] = nil
           OrderController.new(env).order_post
         else
           OrderController.new(env).order_get
