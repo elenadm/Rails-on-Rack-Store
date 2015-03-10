@@ -5,6 +5,11 @@
   <link rel='stylesheet' type='text/css' href='/css/style.css'>
 </head>
 <body>
+<% if @time_visit %>
+    Last visit: <%= @time_visit %>
+    Counter: <%= @counter %>
+<% end %>
+
 <%= yield %>
 </body>
 </html>

@@ -1,15 +1,11 @@
-require './controller'
+require_relative 'controller'
+require_relative '../cart'
 
 class CartController < Controller
-  def cart
-    session['cart'] ||= Cart.new
-    session['cart']
-  end
-
   def cart_post_add
     pr_name = Product.find(params['product_name'])
     cart.add(pr_name)
-    redirect_to('/cart')
+    redirect_to('/')
   end
 
   def cart_post_delete_product
@@ -24,6 +20,12 @@ class CartController < Controller
 
   def cart_get
     @cart = cart
-    render './cart.html.erb'
+    render 'cart.html.erb'
+  end
+
+  private
+
+  def cart
+    session['cart'] ||= Cart.new
   end
 end

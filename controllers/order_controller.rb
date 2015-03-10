@@ -1,11 +1,7 @@
-require './controller'
+require_relative 'controller'
+require_relative '../order'
 
 class OrderController < Controller
-  def order
-    @env['order']= Order.new(params['name'], params['address'], params['phone'], session['cart'])
-    @env['order']
-  end
-
   def order_post
     order.save
     session['cart'] = nil
@@ -19,6 +15,12 @@ class OrderController < Controller
 
   def order_get
     @orders = order.all
-    render './order.html.erb'
+    render 'order.html.erb'
+  end
+
+  private
+
+  def order
+    @env['order'] = Order.new(params['name'], params['address'], params['phone'], session['cart'])
   end
 end

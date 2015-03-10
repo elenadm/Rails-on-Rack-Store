@@ -6,9 +6,10 @@ class Template
   end
 
   def render(template, layout = nil)
-    view = ERB.new(File.read(template)).result(@context.get_binding)
+    path_location = __dir__ + '/views/'
+    view = ERB.new(File.read(path_location + template)).result(@context.get_binding)
     if layout
-      ERB.new(File.read(layout)).result(@context.get_binding{view})
+      ERB.new(File.read(path_location + layout)).result(@context.get_binding { view })
     else
       view
     end

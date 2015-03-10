@@ -1,10 +1,6 @@
-require './product'
-require './cart'
-require './order'
-require './product_controller'
-require './cart_controller'
-require './order_controller'
-require './controller'
+require_relative 'controllers/product_controller.rb'
+require_relative 'controllers/cart_controller.rb'
+require_relative 'controllers/order_controller.rb'
 
 class Store
   def call(env)

@@ -5,7 +5,7 @@ class Controller
     @code = 200
     @headers = {"Content-Type" => "text/html"}
     @body = ''
-    @layout = './application.html.erb'
+    @layout = 'application.html.erb'
   end
 
   def call(env)
@@ -15,24 +15,26 @@ class Controller
     [@code, @headers, [@body]]
   end
 
-  def session
-    @env['session']
+  def get_binding
+    binding
+  end
+
+  private
+
+  def render(view)
+    @body = Template.new(self).render(view, @layout)
   end
 
   def params
     @request.params.merge(@env['url_params'] || {})
   end
 
-  def render(view)
-    @body = Template.new(self).render(view, @layout)
-  end
-
-  def get_binding
-    binding
-  end
-
   def redirect_to(uri)
     @code = 302
     @headers['Location'] = uri
+  end
+
+  def session
+    @env['session']
   end
 end
