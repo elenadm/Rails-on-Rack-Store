@@ -1,13 +1,24 @@
-class OrderController
-  def initialize(env)
-    @env = env
+require './controller'
+
+class OrderController < Controller
+  def order
+    @env['order']= Order.new(params['name'], params['address'], params['phone'], session['cart'])
+    @env['order']
   end
 
   def order_post
-    [200, {'Content-type' => 'text/html'}, [@env['order'].to_html]]
+    order.save
+    session['cart'] = nil
+    redirect_to('/order')
+  end
+
+  def order_post_delete_all_orders
+    order.delete_all
+    redirect_to('/order')
   end
 
   def order_get
-    [200, {"Content-Type" => "text/html"}, [@env['session'].to_s, Product.to_html]]
+    @orders = order.all
+    render './order.html.erb'
   end
 end

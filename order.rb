@@ -1,5 +1,3 @@
-require './erb_context.rb'
-
 class Order
   @@orders = []
 
@@ -27,17 +25,4 @@ class Order
   def all
     @@orders
   end
-
-  def to_html
-    context = ERBContext.new(:orders => @@orders)
-    Template.new(context).render('./order.html.erb', './application.html.erb')
-  end
 end
-
-# def checkout
-# 	order = Order.new
-# 	order.name = name
-#   скопировать товары
-# 	очистить товары
-# 	order.save
-# end

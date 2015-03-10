@@ -2,8 +2,8 @@ require './controller'
 
 class CartController < Controller
   def cart
-    @env['session']['cart'] ||= Cart.new
-    @env['session']['cart']
+    session['cart'] ||= Cart.new
+    session['cart']
   end
 
   def cart_post_add

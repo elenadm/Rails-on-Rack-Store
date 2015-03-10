@@ -31,14 +31,16 @@ class Store
         CartController.new.call(env)
       when '/order'
         if request.post?
-          order = Order.new(request.params['name'], request.params['address'], request.params['phone'], env['session']['cart'])
-          order.save
-          env['order']= order
-          env['session']['cart'] = nil
-          OrderController.new(env).order_post
+          if request.params['delete_all_orders']
+            env['action'] = 'order_post_delete_all_orders'
+          else
+            env['url_params'] = {'name' => request.params['name'], 'address' => request.params['address'], 'phone' => request.params['phone']}
+            env['action'] = 'order_post'
+          end
         else
-          OrderController.new(env).order_get
+          env['action'] = 'order_get'
         end
+        OrderController.new.call(env)
       when /^\/(\w+)$/
         env['action'] = 'one_product'
         env['url_params'] = {'name' => $1}

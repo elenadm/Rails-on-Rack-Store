@@ -5,7 +5,7 @@ class Controller
     @code = 200
     @headers = {"Content-Type" => "text/html"}
     @body = ''
-    @layout = "./application.html.erb"
+    @layout = './application.html.erb'
   end
 
   def call(env)
@@ -13,6 +13,10 @@ class Controller
     @env = env # alternative request.params
     send env['action']
     [@code, @headers, [@body]]
+  end
+
+  def session
+    @env['session']
   end
 
   def params
