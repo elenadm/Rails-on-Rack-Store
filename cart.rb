@@ -1,5 +1,3 @@
-require './erb_context.rb'
-
 class Cart
   def initialize
     @cart = {}
@@ -23,7 +21,7 @@ class Cart
 
   def delete(product)
     @cart[product] -= 1
-    @cart.delete_if { |key, value| value == 0 }
+    @cart.delete_if { |product, count_product| count_product == 0 }
   end
 
   def total_price
@@ -36,10 +34,5 @@ class Cart
 
   def delete_all
     @cart = {}
-  end
-
-  def to_html
-    context = ERBContext.new(:cart => self)
-    Template.new(context).render("./cart.html.erb", "./application.html.erb")
   end
 end

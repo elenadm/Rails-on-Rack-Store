@@ -10,29 +10,31 @@ class Store
   def call(env)
     request = Rack::Request.new(env)
     case request.path
-      when "/"
+      when '/'
         env['action'] = 'all'
         ProductController.new.call(env)
-      when "/cart"
+      when '/cart'
         if request.post?
-          env['session']['cart'] ||= Cart.new
-          case
-            when request.params["product_name"]
-              env['product_name'] = request.params["product_name"]
-              CartController.new(env).cart_post_add
-            when request.params["delete_product"]
-              env['delete_product'] = request.params["delete_product"]
-              CartController.new(env).cart_post_delete_product
-            when request.params["delete_all_products"]
-              env['delete_all_products'] = request.params["delete_all_products"]
-              CartController.new(env).cart_post_delete_all_products
+          if request.params['product_name']
+            env['url_params'] = {'product_name' => request.params['product_name']}
+            env['action'] = 'cart_post_add'
+          elsif request.params['delete_product']
+            env['url_params'] = {'delete_product' => request.params['delete_product']}
+            env['action'] = 'cart_post_delete_product'
+          elsif request.params['delete_all_products']
+            env['url_params'] = {'delete_all_products' => request.params['delete_all_products']}
+            env['action'] = 'cart_post_delete_all_products'
           end
+          CartController.new.call(env)
         else
-          CartController.new(env).cart_get
+          env['action'] = 'all'
+          ProductController.new.call(env)
+          # env['action'] = 'cart_get'
+          # CartController.new.call(env)
         end
-      when "/order"
+      when '/order'
         if request.post?
-          env['order'] = Order.new(request.params["name"],request.params["address"],request.params["phone"])
+          env['order'] = Order.new(request.params['name'], request.params['address'], request.params['phone'])
           #p @env['session']['cart'] = nil
           OrderController.new(env).order_post
         else
